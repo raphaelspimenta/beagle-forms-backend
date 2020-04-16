@@ -1,7 +1,7 @@
 import { createFormPage } from './utils'
 import userData from '../user-data'
 
-const number = () => ({
+const number = (id) => ({
   _beagleType_: 'input',
   id: 'card-number-field',
   label: 'número',
@@ -9,48 +9,48 @@ const number = () => ({
   type: 'number',
   maxlength: 16,
   autocomplete: 'cc-number',
-  value: userData.payment?.number,
+  value: userData[id]?.payment?.number,
 })
 
-const name = () => ({
+const name = (id) => ({
   _beagleType_: 'input',
   id: 'card-name-field',
   autocomplete: 'cc-name',
   label: 'Nome como escrito no catão',
   name: 'name',
-  value: userData.payment?.name,
+  value: userData[id]?.payment?.name,
 })
 
-const expiry = () => ({
+const expiry = (id) => ({
   _beagleType_: 'input',
   id: 'card-expiry-field',
   label: 'validade',
   name: 'expiry',
   placeholder: '01-2020',
   autocomplete: 'cc-exp',
-  value: userData.payment?.expiry,
+  value: userData[id]?.payment?.expiry,
 })
 
-const cvv = () => ({
+const cvv = (id) => ({
   _beagleType_: 'input',
   id: 'card-cvv-field',
   label: 'cvv',
   name: 'cvv',
   type: 'number',
   autocomplete: 'cc-csc',
-  value: userData.payment?.cvv,
+  value: userData[id]?.payment?.cvv,
 })
 
-const terms = () => {
-  const price = userData.plan
-    ? userData.plan.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
+const terms = (id) => {
+  const price = userData[id]?.plan
+    ? userData[id]?.plan.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })
     : ''
 
   return {
     _beagleType_: 'checkbox',
     id: 'terms-field',
     name: 'terms',
-    value: userData.payment?.terms,
+    value: userData[id]?.payment?.terms,
     position: 'left',
     style: {
       margin: '10px 0',
@@ -69,11 +69,11 @@ const terms = () => {
   }
 }
 
-export default function getPaymentView() {
+export default function getPaymentView(id) {
   const inputGroups = [
-    [name(), number()],
-    [expiry(), cvv()],
-    terms(),
+    [name(id), number(id)],
+    [expiry(id), cvv(id)],
+    terms(id),
   ]
 
   return createFormPage({

@@ -4,11 +4,15 @@ import userData from '../user-data'
 import getPlanView from '../views/plan'
 import plans from '../plans'
 import { Plan } from '../types'
+import { getRequestRemote } from './utils'
 
 export const loadPlanView: ServerRoute = {
   method: 'GET',
   path: '/plan',
-  handler: getPlanView,
+  handler: request => {
+    const id = getRequestRemote(request)
+    return getPlanView(id)
+  },
 }
 
 export const savePlan: ServerRoute = {
@@ -16,7 +20,8 @@ export const savePlan: ServerRoute = {
   path: '/plan',
   handler: (request, responseToolkit) => {
     const payload = request.payload as Plan
-    userData.plan = find(plans, { id: payload.id })
+    const id = getRequestRemote(request)
+    userData[id].plan = find(plans, { id: payload.id })
     return responseToolkit.response().code(201)
   }
 }

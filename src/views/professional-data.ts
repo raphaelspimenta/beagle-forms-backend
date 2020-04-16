@@ -1,12 +1,12 @@
 import { createFormPage } from './utils'
 import userData from '../user-data'
 
-const education = () => ({
+const education = (id) => ({
   _beagleType_: 'select',
   id: 'education-field',
   label: 'Escolaridade',
   name: 'education',
-  value: userData.professionalData?.education,
+  value: userData[id]?.professionalData?.education,
   options: [
     {
       name: 'Ensino fundamental incompleto',
@@ -39,24 +39,24 @@ const education = () => ({
   ],
 })
 
-const company = () => ({
+const company = (id) => ({
   _beagleType_: 'input',
   id: 'company-field',
   label: 'Empresa ou instituição de ensino',
   name: 'company',
-  value: userData.professionalData?.company,
+  value: userData[id]?.professionalData?.company,
   style: {
     'margin-left': '15px',
     flex: 1
   }
 })
 
-const area = () => ({
+const area = (id) => ({
   _beagleType_: 'select',
   id: 'area-field',
   label: 'Área de atuação',
   name: 'area',
-  value: userData.professionalData?.area,
+  value: userData[id]?.professionalData?.area,
   options: [
     {
       name: 'Educação',
@@ -93,27 +93,27 @@ const area = () => ({
   ],
 })
 
-const profession = () => ({
+const profession = (id) => ({
   _beagleType_: 'input',
   id: 'profession-field',
   label: 'Profissão',
   name: 'profession',
-  value: userData.professionalData?.profession,
+  value: userData[id]?.professionalData?.profession,
 })
 
-const income = () => ({
+const income = (id) => ({
   _beagleType_: 'input',
   id: 'income-field',
   label: 'Renda média mensal (R$)',
   name: 'income',
-  value: userData.professionalData?.income,
+  value: userData[id]?.professionalData?.income,
 })
 
-export default function getProfessionalDataView() {
+export default function getProfessionalDataView(id) {
   const inputGroups = [
-    [education(), company()],
-    [area(), profession()],
-    [income(), { _beagleType_: 'container' }]
+    [education(id), company(id)],
+    [area(id), profession(id)],
+    [income(id), { _beagleType_: 'container' }]
   ]
 
   return createFormPage({

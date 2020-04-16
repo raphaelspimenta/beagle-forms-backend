@@ -37,16 +37,16 @@ const createPlanOption = ({ id, name, description, price }: Plan) => ({
   ]
 })
 
-const radioGroup = () => ({
+const radioGroup = (id) => ({
   _beagleType_: 'radio-group',
   id: 'plan-field',
   name: 'id',
-  value: userData.plan?.id,
+  value: userData[id]?.plan?.id,
   children: plans.map(createPlanOption)
 })
 
 
-export default function getPlanView() {
+export default function getPlanView(id) {
   return createFormPage({
     title: 'plano',
     titleStyle: { margin: '0 0 5px 0' },
@@ -56,7 +56,7 @@ export default function getPlanView() {
     saveUrl: 'plan',
     content: [
       subtitle,
-      radioGroup(),
+      radioGroup(id),
     ],
   })
 }

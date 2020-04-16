@@ -1,0 +1,1 @@
+export const getRequestRemote = (request) => request.info.remoteAddress
