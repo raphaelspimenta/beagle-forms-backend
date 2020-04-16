@@ -1,6 +1,7 @@
 import { Request, Server, ServerRoute } from 'hapi'
 import routes from './routes'
 import { forEach, random } from 'lodash'
+import { PORT } from './env'
 
 const DELAY = { min: 200, max: 800 }
 
@@ -21,8 +22,8 @@ const createRoute = (route: ServerRoute): ServerRoute => ({
 
 const start = async () => {
   const server = new Server({
-    port: 3001,
-    host: 'localhost'
+    port: PORT,
+    host: '0.0.0.0'
   })
 
   forEach(routes, route => server.route(createRoute(route)))
