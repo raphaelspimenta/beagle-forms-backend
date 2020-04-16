@@ -6,7 +6,10 @@ import { PersonalData } from '../types'
 export const loadPersonalDataView: ServerRoute = {
   method: 'GET',
   path: '/personal-data',
-  handler: getPersonalDataView,
+  handler: request => {
+    const id = request.info.remoteAddress
+    return getPersonalDataView(id)
+  },
 }
 
 export const savePersonalData: ServerRoute = {
@@ -14,7 +17,8 @@ export const savePersonalData: ServerRoute = {
   path: '/personal-data',
   handler: (request, responseToolkit) => {
     const payload = request.payload as PersonalData
-    userData.personalData = payload
+    const id = request.info.remoteAddress
+    userData[id] = { personalData: payload }
     return responseToolkit.response().code(201)
-  }
+  },
 }
